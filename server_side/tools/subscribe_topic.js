@@ -3,7 +3,7 @@ var request = require('request');
 module.exports = function() {
     this.subscribeTopic = function(token,topic) {
         console.log('hello world');
-        var URL =  'https://iid.googleapis.com/iid/v1/' + token + '</REGISTRATION_TOKEN>/rel/topics/' + topic;
+        var URL =  'https://iid.googleapis.com/iid/v1/' + token + '/rel/topics/' + topic;
         request.post({
             headers: {
             'content-type':'application/json',

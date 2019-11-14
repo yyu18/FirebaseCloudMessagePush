@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { resolve } from 'dns';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBZ9iO9ZwY3Eck9_Ja_NTfaoEVo_sWzZoc",
@@ -24,8 +25,8 @@ export const onMessageTest = () =>{
 }
 
 export const askForPermissioToReceiveNotifications = async () => {
+  return new Promise(function(resolve,reject){
     try {     
-
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
           console.log('Notification permission granted.');
@@ -35,8 +36,8 @@ export const askForPermissioToReceiveNotifications = async () => {
       });
           messaging.getToken().then((currentToken) => {
             if (currentToken) {
-              console.log(currentToken);
-              return currentToken;
+              //console.log(currentToken);
+              return resolve( currentToken);
             } else {
               console.log('No Instance ID token available. Request permission to generate one.');
             }
@@ -46,4 +47,6 @@ export const askForPermissioToReceiveNotifications = async () => {
     } catch (error) {
       console.error(error);
     }
+  })
+  
   }
