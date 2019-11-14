@@ -4,7 +4,8 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import RouteApp from './routeApp.js';
 import { askForPermissioToReceiveNotifications } from './push-notification';
-
+import { onMessageTest } from './push-notification';
+onMessageTest();
 askForPermissioToReceiveNotifications().then(function(result){
 
     console.log(result);

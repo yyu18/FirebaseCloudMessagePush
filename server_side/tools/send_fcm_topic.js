@@ -2,19 +2,19 @@ const https = require('https');
 var request = require('request');
 
 var PROJECT_ID = 'pushnotification-124c9';
-
+//https://homepages.cae.wisc.edu/~ece533/images/airplane.png
 module.exports = function() {
-    this.sendFcmTopic = function (token,topic) {
+    this.sendFcmTopic = function (topic,content) {
         return new Promise(function(resolve, reject) {
     // call HTTP legacy API
+    console.log(content);
         const data = JSON.stringify(
-
             {
                 "notification":{
-                    'title':'this is a notification title',
-                    'body':'this is a notification body',
-                    'image':'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-                    "icon": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+                    'title':content.title,
+                    'body':content.body,
+                    'image':content.image,
+                    "icon": content.icon,
                     'click_action':'http://localhost:3000/'
             },
                 "to":"/topics/" + topic

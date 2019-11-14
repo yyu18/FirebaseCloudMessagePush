@@ -7,7 +7,7 @@ class RouteApp extends Component {
   render(){
     return (
         <Router>
-            <Route  path="/admin" component={Admin}/>
+            <Route  path="/send-fcm-topic" component={Admin}/>
             <Route exact path="/" component={App}/>
         </Router>
     );

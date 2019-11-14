@@ -17,11 +17,13 @@ const messaging = firebase.messaging();
 
 messaging.usePublicVapidKey('BKsyqq2G4vKCbUw5-9892nXab4rUTLfvwsnbD3lZd8SvjdDHQulPh0LfPCqFXokVTN6BexuSTZqHxkPphcxhuCg');
 
-export const onMessageTest = () =>{
-  messaging.onMessage((payload) => {
-    alert('Message received. ', payload);
-    // ...
-  });
+export const onMessageTest = (payload) =>{
+  var notificationOptions = {
+    body: payload.notification.body,
+    icon: payload.notification.icon,
+    click_action: payload.notification.click_action
+  };
+  new Notification(payload.notification.title, notificationOptions);
 }
 
 export const askForPermissioToReceiveNotifications = async () => {

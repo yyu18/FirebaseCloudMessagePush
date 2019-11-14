@@ -1,20 +1,20 @@
 var express = require('express');
 var app = express();
 var cors = require('cors');
+var bodyParser = require('body-parser');
 require('./tools/send_fcm_message.js')();
 require('./tools/get_access_token.js')();
 require('./tools/subscribe_topic.js')();
 require('./tools/send_fcm_topic.js')();
 require('./tools/unsubscribe_topic.js')();
 
+app.use(bodyParser.json());
 app.use(cors());
-app.get('/sendTopic', function(req, res) {
-    var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
+app.post('/sendTopic', function(req, res) {
+    console.dir(req.body);
     var topic = 'notifyTest';
     getAccessToken().then(function (accessToken){
-        //sendFcmMessage(accessToken.access_token);
-        //subscribeTopic(token,topic);
-        sendFcmTopic(token,topic).then(function(callback){
+        sendFcmTopic(topic,req.body).then(function(callback){
             res.send(callback);
         });
 

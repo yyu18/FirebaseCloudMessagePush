@@ -10,6 +10,7 @@ import {
     Checkbox,
     Button,
     AutoComplete,
+    message
   } from 'antd';
   import React, {Component} from 'react';
   const { Option } = Select;
@@ -25,7 +26,17 @@ import {
       e.preventDefault();
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log(values);
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.open( "POST",  'http://localhost:5000/sendTopic' ); // false for synchronous request
+          xmlHttp.setRequestHeader("Content-Type", "application/json");
+          xmlHttp.send(JSON.stringify({
+            "title":values.title,
+            "body":values.body,
+            "image":values.image,
+            "icon":values.icon,
+          }));
+          //message.success(xmlHttp.responseText);
+          console.log(xmlHttp.responseText);
         }
       });
     };
