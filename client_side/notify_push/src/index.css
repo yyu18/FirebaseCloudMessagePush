@@ -19,11 +19,16 @@ code {
   margin: 16px 24px 16px 0;
   float: left;
 }
-
+#root {
+  margin-top:8%
+}
 
 .subscribe {
   text-align: center;
   margin:auto;
+  display: flex;
+  align-items:center;
+  justify-content: center;
 }
 .title {
   text-align: center;

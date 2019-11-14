@@ -3,7 +3,8 @@ import { askForPermissioToReceiveNotifications } from './push-notification';
 import { Switch } from 'antd';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Input } from 'antd';
+import { Input,message } from 'antd';
+
 
 class App extends React.Component {
     state = {
@@ -16,25 +17,21 @@ class App extends React.Component {
             console.log(result);
         });
     }
+   
     onChange=(checked)=> {
       if(checked) {
-        fetch('http://localhost:5000/subscribe')
-        .then(response => {
-          console.log(response);
-          response.json();
-        })
-        // ...then we update the users state
-        .then(data => console.log(data)
-         /* this.setState({
-            users: data,
-            isLoading: false,
-          })*/
-        )
-        // Catch any errors we hit and update the app
-        .catch(error => this.setState({ error, isLoading: false }));
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET",  'http://localhost:5000/subscribe', false ); // false for synchronous request
+        xmlHttp.send( null );
 
+        message.success(xmlHttp.responseText);
+   
       } else {
-        console.log('unsubsribed');
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET",  'http://localhost:5000/unsubscribe', false ); // false for synchronous request
+        xmlHttp.send( null );
+
+        message.error(xmlHttp.responseText);
       }
     }
    
@@ -47,7 +44,7 @@ class App extends React.Component {
         </div>
 
         <div className = 'subscribe'>
-          <Input placeholder="Basic usage" style={{width:'11%'}} />
+          <h2>Mock Topic 1</h2>
           <Switch defaultChecked onChange={this.onChange}  style={{marginLeft:'5%'}} />
         </div>
         </React.Fragment>

@@ -5,8 +5,7 @@ var PROJECT_ID = 'pushnotification-124c9';
 
 module.exports = function() {
     this.sendFcmTopic = function (token,topic) {
-        console.log(token);
-
+        return new Promise(function(resolve, reject) {
     // call HTTP legacy API
         const data = JSON.stringify(
 
@@ -30,7 +29,7 @@ module.exports = function() {
             url:'https://fcm.googleapis.com/fcm/send',
             body:data
         },function(err, res, body){
-            console.log(body);
+            resolve(body);
         })
 
 
@@ -70,5 +69,6 @@ module.exports = function() {
         })
 
 */
+    })
     }
 }

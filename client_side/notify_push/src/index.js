@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import RouteApp from './routeApp.js';
+import { askForPermissioToReceiveNotifications } from './push-notification';
 
+askForPermissioToReceiveNotifications().then(function(result){
 
-ReactDOM.render(
-    <App />
-, document.getElementById('root'));
+    console.log(result);
+});
+ReactDOM.render(<RouteApp />, document.getElementById('root'));
 
 
 //POST request
