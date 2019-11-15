@@ -4,11 +4,16 @@ var request = require('request');
 var PROJECT_ID = 'pushnotification-124c9';
 //https://homepages.cae.wisc.edu/~ece533/images/airplane.png
 module.exports = function() {
-    this.sendFcmTopic = function (topic,content) {
-        return new Promise(function(resolve, reject) {
-    // call HTTP legacy API
-    console.log(content);
-        const data = JSON.stringify(
+    this.sendFcmTopic = function (topic,content,callback) {    
+            if(!content.title||!content.body){
+                return callback('EMPTY TITLE OR DESCRIPTION')
+            } else {
+                    if(!content.image.match(/.(jpg|jpeg|png|gif)$/i)||!content.icon.match(/.(jpg|jpeg|png|gif)$/i)){
+                        return callback('IMAGE Extension is not allowed');
+                    } else {
+      
+          // call HTTP legacy API
+          const data = JSON.stringify(
             {
                 "notification":{
                     'title':content.title,
@@ -18,7 +23,7 @@ module.exports = function() {
                     'click_action':'http://localhost:3000/'
             },
                 "to":"/topics/" + topic
-              }
+            }
         );
 
         request.post({
@@ -29,11 +34,12 @@ module.exports = function() {
             url:'https://fcm.googleapis.com/fcm/send',
             body:data
         },function(err, res, body){
-            resolve(body);
+            var bodyParse = JSON.parse(body);
+            if(bodyParse.error) return callback(bodyParse.error);
+            callback(null,bodyParse);
         })
 
-
-/*
+    /*
     //call HTTP V1 API
         const data = JSON.stringify(
             {
@@ -68,7 +74,9 @@ module.exports = function() {
             console.log(body);
         })
 
-*/
-    })
-    }
-}
+    */
+                    }
+                }
+            }
+        }
+    

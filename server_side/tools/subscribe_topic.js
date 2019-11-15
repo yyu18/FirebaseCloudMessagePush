@@ -1,9 +1,8 @@
 var request = require('request');
 
 module.exports = function() {
-    this.subscribeTopic = function(token,topic) {
-   
-        var URL =  'https://iid.googleapis.com/iid/v1/' + token + '/rel/topics/' + topic;
+    this.subscribeTopic = function(token,topic,callback) {
+        var URL =  'https://iid.googleapis.com/iid/v1/' + token + '/rel/topics/' + topic;   
         request.post({
             headers: {
             'content-type':'application/json',
@@ -11,8 +10,9 @@ module.exports = function() {
             },
             url : URL,
         },function(err, res, body){
-            console.log(body);
+            var bodyParse = JSON.parse(body);
+            if(bodyParse.error) return callback(bodyParse.error);
+            callback(null,bodyParse);
         })
-        console.log('subscribed successfully!');
     }
 }

@@ -5,33 +5,63 @@ import 'antd/dist/antd.css';
 import './index.css';
 import { Input,message } from 'antd';
 
-
 class App extends React.Component {
-    state = {
-        token:'',
-        topic:''
-    };
-    handleClick = () =>{
-        askForPermissioToReceiveNotifications().then(function(result){
-            this.setState({ token:result });
-            console.log(result);
-        });
+  constructor(props) {
+		super(props);
+		this.state = {
+      token:'',
+      topic:''
+    }
+    this.topicRef = React.createRef();
+	}
+
+    componentDidMount () {
+      let self=this;
+      askForPermissioToReceiveNotifications().then(function(result){
+
+        self.setState({ token:result,topic:'default' });
+    });
+    }
+    handleClick = (e) =>{
+      this.setState({topic:e})
     }
    
     onChange=(checked)=> {
+      var xmlHttp = new XMLHttpRequest();
+
+      var data = JSON.stringify({
+        "topic":this.state.topic,
+        "token":this.state.token
+      });
       if(checked) {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET",  'http://localhost:5000/subscribe', false ); // false for synchronous request
-        xmlHttp.send( null );
+        xmlHttp.open( "POST",  'http://localhost:5000/subscribe'); // false for synchronous request
+        xmlHttp.setRequestHeader("Content-Type", "application/json");
+        xmlHttp.send(data);
+        xmlHttp.onreadystatechange= function() {
+          if(this.readyState == 4 && this.status == 200){
+            var res = JSON.parse(xmlHttp.response);
+            if(res.status==="SUCCESS") {
+              message.success(res.message);
+            } else {
+              message.error(res.message)
+            }
+          }
+        }
 
-        message.success(xmlHttp.responseText);
-   
       } else {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET",  'http://localhost:5000/unsubscribe', false ); // false for synchronous request
-        xmlHttp.send( null );
-
-        message.error(xmlHttp.responseText);
+        xmlHttp.open( "POST",  'http://localhost:5000/unsubscribe'); // false for synchronous request
+        xmlHttp.setRequestHeader("Content-Type", "application/json");
+        xmlHttp.send(data);
+        xmlHttp.onreadystatechange= function() {
+          if(this.readyState == 4 && this.status == 200){
+            var res = JSON.parse(xmlHttp.response);
+            if(res.status==="SUCCESS") {
+              message.warning(res.message);
+            } else {
+              message.error(res.message)
+            }
+          }
+        }
       }
     }
    
@@ -44,14 +74,25 @@ class App extends React.Component {
         </div>
 
         <div className = 'subscribe'>
-          <h2>Mock Topic 1</h2>
-          <Switch defaultChecked onChange={this.onChange}  style={{marginLeft:'5%'}} />
+          <h2 ref={this.topicRef}>notifyTest1</h2>
+          <Switch onChange={this.onChange}  style={{marginLeft:'5%'} } onClick={()=>this.handleClick('notifyTest1')}/>
         </div>
+        <div className = 'subscribe'>
+          <h2 ref={this.topicRef}>notifyTest2</h2>
+          <Switch onChange={this.onChange}  style={{marginLeft:'5%'}} onClick={()=>this.handleClick('notifyTest2')}/>
+        </div>
+        <div className = 'subscribe'>
+          <h2 ref={this.topicRef}>notifyTest3</h2>
+          <Switch onChange={this.onChange}  style={{marginLeft:'5%'}} onClick={()=>this.handleClick('notifyTest3')}/>
+        </div>
+        <div className = 'subscribe'>
+          <h2 ref={this.topicRef}>notifyTest4</h2>
+          <Switch onChange={this.onChange}  style={{marginLeft:'5%'}} onClick={()=>this.handleClick('notifyTest4')}/>
+        </div>
+
         </React.Fragment>
       );
     }
   }
-
-  
 
 export default App;
