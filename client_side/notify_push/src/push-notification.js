@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { resolve } from 'dns';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBZ9iO9ZwY3Eck9_Ja_NTfaoEVo_sWzZoc",

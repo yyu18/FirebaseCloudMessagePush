@@ -3,14 +3,20 @@ import { askForPermissioToReceiveNotifications } from './push-notification';
 import { Switch } from 'antd';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Input,message } from 'antd';
+import { message } from 'antd';
 
 class App extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
       token:'',
-      topic:''
+      topic:{},
+      toggleStatus:{
+        'notifyTest1':'',
+        'notifyTest2':'',
+        'notifyTest3':'',
+        'notifyTest4':''
+      }
     }
     this.topicRef = React.createRef();
 	}
@@ -18,10 +24,54 @@ class App extends React.Component {
     componentDidMount () {
       let self=this;
       askForPermissioToReceiveNotifications().then(function(result){
-
-        self.setState({ token:result,topic:'default' });
+              //check the info of all topics
+       var data = JSON.stringify({
+        "token":result
+      });
+       var xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "POST",  'http://localhost:5000/check-topics'); // false for synchronous request
+       xmlHttp.setRequestHeader("Content-Type", "application/json");
+       xmlHttp.send(data);
+       xmlHttp.onreadystatechange= function() {
+         if(this.readyState === 4 && this.status === 200){
+           var res = JSON.parse(xmlHttp.response);
+           if(res.status==="SUCCESS") {
+             self.setState({topic:res.message.rel.topics});
+             Object.keys(res.message.rel.topics).map(function(key,index){
+               console.log(key);
+               switch(key) {
+                  case 'notifyTest1' :
+                    self.setState({toggleStatus:{
+                      'notifyTest1':'true'
+                   }});
+                   break;
+                  case 'notifyTest2' :
+                    self.setState({toggleStatus:{
+                      'notifyTest2':'true'
+                    }});
+                    break;
+                  case 'notifyTest3' :
+                      self.setState({toggleStatus:{
+                        'notifyTest3':'true'
+                      }});
+                      break;
+                  case 'notifyTest4' :
+                      self.setState({toggleStatus:{
+                        'notifyTest4':'true'
+                      }});
+                      break;
+               }
+              
+             })
+           } else {
+             console.log(res.message)
+           }
+         }
+       }
+        self.setState({ token:result });
     });
-    }
+  }
+
     handleClick = (e) =>{
       this.setState({topic:e})
     }
@@ -38,7 +88,7 @@ class App extends React.Component {
         xmlHttp.setRequestHeader("Content-Type", "application/json");
         xmlHttp.send(data);
         xmlHttp.onreadystatechange= function() {
-          if(this.readyState == 4 && this.status == 200){
+          if(this.readyState === 4 && this.status === 200){
             var res = JSON.parse(xmlHttp.response);
             if(res.status==="SUCCESS") {
               message.success(res.message);
@@ -53,7 +103,7 @@ class App extends React.Component {
         xmlHttp.setRequestHeader("Content-Type", "application/json");
         xmlHttp.send(data);
         xmlHttp.onreadystatechange= function() {
-          if(this.readyState == 4 && this.status == 200){
+          if(this.readyState === 4 && this.status === 200){
             var res = JSON.parse(xmlHttp.response);
             if(res.status==="SUCCESS") {
               message.warning(res.message);
@@ -66,6 +116,7 @@ class App extends React.Component {
     }
    
     render() {
+console.log(this.state)
       return (
         <React.Fragment>
         <div className = "title">

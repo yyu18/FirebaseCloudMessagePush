@@ -7,6 +7,7 @@ require('./tools/get_access_token.js')();
 require('./tools/subscribe_topic.js')();
 require('./tools/send_fcm_topic.js')();
 require('./tools/unsubscribe_topic.js')();
+require('./tools/check_topics.js')();
 //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
 //var topic = 'notifyTest';
 
@@ -105,6 +106,32 @@ app.get('/send1to1message', function(req, res) {
         res.send('sent');
     });  
 });
+
+app.post('/check-topics', function(req, res) {
+    var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
+    var topic = 'notifyTest';
+    if(req.body.token) {
+        checkTopics(req.body.token,function(err,data){
+            if(err) {
+                res.json({
+                    'status':'ERROR',
+                    'message':err
+                })
+            } else {
+                res.json({
+                    'status':'SUCCESS',
+                    'message':data
+                })
+            }
+        })
+    } else {
+        res.json({
+            'status':'ERROR',
+            'message':'Invalid Token!'
+        })
+    }
+});
+
 
 app.listen(5000, function() {
     console.log('Example app listening on port 5000!');
