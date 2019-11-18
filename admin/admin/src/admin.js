@@ -34,6 +34,7 @@ import {
               "body":values.body,
               "image":values.image,
               "icon":values.icon,
+              "url":values.url
             }
           }));
           xmlHttp.onreadystatechange= function() {
@@ -125,6 +126,7 @@ import {
               ],
             })(<Input />)}
           </Form.Item>
+
           <Form.Item
             label={
               <span>
@@ -139,6 +141,22 @@ import {
               rules: [{ required: true, message: 'Please input the icon!', whitespace: true }],
             })(<Input />)}
           </Form.Item>
+
+          <Form.Item
+            label={
+              <span>
+                URL Redirection&nbsp;
+                <Tooltip title="Where to go when the user clicks the notification">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            }
+          >
+            {getFieldDecorator('url', {
+              rules: [{ required: true, message: 'Please input the icon!', whitespace: true }],
+            })(<Input />)}
+          </Form.Item>
+
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               Submit

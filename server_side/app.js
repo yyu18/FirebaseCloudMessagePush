@@ -8,6 +8,7 @@ require('./tools/subscribe_topic.js')();
 require('./tools/send_fcm_topic.js')();
 require('./tools/unsubscribe_topic.js')();
 require('./tools/check_topics.js')();
+require('./tools/valid_url.js')();
 //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
 //var topic = 'notifyTest';
 
@@ -21,25 +22,32 @@ app.post('/sendTopic', function(req, res) {
             'message':'Topic or Content invalid!'
         })
     } else {
-
-
-    sendFcmTopic(req.body.topic,req.body.content,function(err,data){
-        if(err) {
-            res.json({
-                'status':'ERROR',
-                'message':err
+    const URLValidator = validURL(req.body.content.url);
+        if(URLValidator) {
+            sendFcmTopic(req.body.topic,req.body.content,function(err,data){
+                if(err) {
+                    res.json({
+                        'status':'ERROR',
+                        'message':err
+                    })
+                } else {
+                    res.json({
+                        'status':'SUCCESS',
+                        'message':'Message Sent, Message ID Is'+data.message_id
+                    })
+                }
             })
         } else {
             res.json({
-                'status':'SUCCESS',
-                'message':'Message Sent, Message ID Is'+data.message_id
+                'status':'ERROR',
+                'message':'Invalid URL'
             })
         }
-    })
 }
 });
 
 app.post('/subscribe', function(req, res) {
+    console.log(req.body);
     if(req.body.token){
         if(req.body.topic){
             subscribeTopic(req.body.token,req.body.topic,function(err,data){

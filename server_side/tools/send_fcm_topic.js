@@ -1,4 +1,3 @@
-const https = require('https');
 var request = require('request');
 
 var PROJECT_ID = 'pushnotification-124c9';
@@ -12,19 +11,20 @@ module.exports = function() {
                         return callback('IMAGE Extension is not allowed');
                     } else {
       
-          // call HTTP legacy API
-          const data = JSON.stringify(
-            {
-                "notification":{
-                    'title':content.title,
-                    'body':content.body,
-                    'image':content.image,
-                    "icon": content.icon,
-                    'click_action':'http://localhost:3000/'
-            },
-                "to":"/topics/" + topic
-            }
-        );
+
+            const data = JSON.stringify(
+                {
+                    "notification":{
+                        'title':content.title,
+                        'body':content.body,
+                        'image':content.image,
+                        "icon": content.icon,
+                        'click_action':content.url,
+                        "requireInteraction": "true",
+                },
+                    "to":"/topics/" + topic
+                }
+            );
 
         request.post({
             headers: {
