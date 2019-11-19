@@ -3,21 +3,15 @@ import {
     Input,
     Tooltip,
     Icon,
-    Select,
     Button,
-    AutoComplete,
     message
   } from 'antd';
-  import React, {Component} from 'react';
+  import React from 'react';
   import './App.css';
-
-  const { Option } = Select;
-  const AutoCompleteOption = AutoComplete.Option;
   
   class RegistrationForm extends React.Component {
     state = {
       confirmDirty: false,
-      autoCompleteResult: [],
     };
   
     handleSubmit = e => {
@@ -25,7 +19,7 @@ import {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           var xmlHttp = new XMLHttpRequest();
-          xmlHttp.open( "POST",  'http://localhost:5000/sendTopic'); // false for synchronous request
+          xmlHttp.open( "POST",  'https://nodejs.singtao.ca:8080/sendTopic'); // false for synchronous request
           xmlHttp.setRequestHeader("Content-Type", "application/json");
           xmlHttp.send(JSON.stringify({
             "topic":values.topic,
@@ -38,7 +32,7 @@ import {
             }
           }));
           xmlHttp.onreadystatechange= function() {
-            if(this.readyState == 4 && this.status == 200){
+            if(this.readyState === 4 && this.status === 200){
               var res = JSON.parse(xmlHttp.response);
               if(res.status==="SUCCESS") {
                 message.success(res.message);
@@ -54,7 +48,6 @@ import {
 
     render() {
       const { getFieldDecorator } = this.props.form;
-      const { autoCompleteResult } = this.state;
   
       const formItemLayout = {
         labelCol: {
@@ -153,7 +146,7 @@ import {
             }
           >
             {getFieldDecorator('url', {
-              rules: [{ required: true, message: 'Please input the icon!', whitespace: true }],
+              rules: [{ required: true, message: 'Please input the URL Redirection!', whitespace: true }],
             })(<Input />)}
           </Form.Item>
 

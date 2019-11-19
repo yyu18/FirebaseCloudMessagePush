@@ -22,41 +22,51 @@ class App extends React.Component {
 
     componentDidMount () {
       let self=this;
-      var toggleStatus = {...self.state.toggle};
+      var toggleStatus = [...self.state.toggle];
+
       askForPermissioToReceiveNotifications().then(function(result){
               //check the info of all topics
        var data = JSON.stringify({
         "token":result
       });
        var xmlHttp = new XMLHttpRequest();
-       xmlHttp.open( "POST",  'http://localhost:5000/check-topics'); // false for synchronous request
+       xmlHttp.open( "POST",  'https://nodejs.singtao.ca:8080/check-topics'); // false for synchronous request
        xmlHttp.setRequestHeader("Content-Type", "application/json");
        xmlHttp.send(data);
        xmlHttp.onreadystatechange= function() {
          if(this.readyState === 4 && this.status === 200){
            var res = JSON.parse(xmlHttp.response);
            if(res.status==="SUCCESS") {
-             self.setState({topic:res.message.rel.topics});
+             console.log(res);
+             if(res.message.rel){
+              self.setState({topic:res.message.rel.topics});
+                      
              Object.keys(res.message.rel.topics).map(function(key,index){
-               switch(key) {
-                case 'notifyTest1' :
-                  toggleStatus[0].status = 'true';
-                  self.setState({ toggleStatus});
-                  break;
-                case 'notifyTest2' :
-                  toggleStatus[1].status = 'true';
-                  self.setState({ toggleStatus});
-                  break;
-                case 'notifyTest3' :
-                  toggleStatus[2].status = 'true';
-                  self.setState({ toggleStatus});
-                  break;
-                case 'notifyTest4' :
-                  toggleStatus[3].status = 'true';
-                  self.setState({ toggleStatus});
-                  break;
-               }
-             })
+              switch(key) {
+               case 'notifyTest1' :
+                 toggleStatus[0].status = 'true';
+                 self.setState({ toggleStatus});
+                 break;
+               case 'notifyTest2' :
+                 toggleStatus[1].status = 'true';
+                 self.setState({ toggleStatus});
+                 break;
+               case 'notifyTest3' :
+                 toggleStatus[2].status = 'true';
+                 self.setState({ toggleStatus});
+                 break;
+               case 'notifyTest4' :
+                 toggleStatus[3].status = 'true';
+                 self.setState({ toggleStatus});
+                 break;
+                 default:
+              }
+            })
+             } else {
+               self.setState({topic:res.message.rel})
+
+             }
+     
            } else {
              console.log(res.message)
            }
@@ -68,13 +78,13 @@ class App extends React.Component {
 
     handleClick = (id) =>{
       var xmlHttp = new XMLHttpRequest();
-      var toggleStatus = {...this.state.toggle};
+      var toggleStatus = [...this.state.toggle];
       var data = JSON.stringify({
         "topic":toggleStatus[id].id,
         "token":this.state.token
       });
       if(toggleStatus[id].status === 'true'){
-        xmlHttp.open( "POST",  'http://localhost:5000/unsubscribe'); // false for synchronous request
+        xmlHttp.open( "POST",  'https://nodejs.singtao.ca:8080/unsubscribe'); // false for synchronous request
         xmlHttp.setRequestHeader("Content-Type", "application/json");
         xmlHttp.send(data);
         xmlHttp.onreadystatechange= function() {
@@ -90,7 +100,7 @@ class App extends React.Component {
         toggleStatus[id].status = '';
         this.setState({ toggleStatus});
       } else {
-          /*xmlHttp.open( "POST",  'http://localhost:5000/subscribe'); // false for synchronous request
+          xmlHttp.open( "POST",  'https://nodejs.singtao.ca:8080/subscribe'); // false for synchronous request
           xmlHttp.setRequestHeader("Content-Type", "application/json");
           xmlHttp.send(data);
           xmlHttp.onreadystatechange= function() {
@@ -102,13 +112,14 @@ class App extends React.Component {
                 message.error(res.message)
               }
             }
-          }*/
+          }
         toggleStatus[id].status = 'true';
         this.setState({ toggleStatus});
       };
     }
   
     render() {
+
       return (
         <React.Fragment>
         <div className = "title">
