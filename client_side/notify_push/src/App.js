@@ -49,19 +49,19 @@ class App extends React.Component {
                         Object.keys(res.message.rel.topics).map(function(key,index){
                           switch(key) {
                           case 'notifyTest1' :
-                            toggleStatus[0].status = 'true';
+                            toggleStatus[0].status = true;
                             self.setState({ toggleStatus});
                             break;
                           case 'notifyTest2' :
-                            toggleStatus[1].status = 'true';
+                            toggleStatus[1].status = true;
                             self.setState({ toggleStatus});
                             break;
                           case 'notifyTest3' :
-                            toggleStatus[2].status = 'true';
+                            toggleStatus[2].status = true;
                             self.setState({ toggleStatus});
                             break;
                           case 'notifyTest4' :
-                            toggleStatus[3].status = 'true';
+                            toggleStatus[3].status = true;
                             self.setState({ toggleStatus});
                             break;
                             default:
