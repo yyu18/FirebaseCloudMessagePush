@@ -16,15 +16,6 @@ const messaging = firebase.messaging();
 
 messaging.usePublicVapidKey('BKsyqq2G4vKCbUw5-9892nXab4rUTLfvwsnbD3lZd8SvjdDHQulPh0LfPCqFXokVTN6BexuSTZqHxkPphcxhuCg');
 
-export const onMessageTest = (payload) =>{
-  var notificationOptions = {
-    body: payload.notification.body,
-    icon: payload.notification.icon,
-    click_action: payload.notification.click_action
-  };
-  new Notification(payload.notification.title, notificationOptions);
-}
-
 export const askForPermissioToReceiveNotifications = async () => {
   return new Promise(function(resolve,reject){
     try {     
@@ -33,12 +24,19 @@ export const askForPermissioToReceiveNotifications = async () => {
           console.log('Notification permission granted.');
         } else {
           console.log('Unable to get permission to notify.');
+          return resolve(
+            JSON.stringify({
+            "permission":'disagree'
+            })
+          );
         }
       });
           messaging.getToken().then((currentToken) => {
             if (currentToken) {
               //console.log(currentToken);
-              return resolve( currentToken);
+              return resolve(  JSON.stringify({
+                "token":currentToken
+                }));
             } else {
               console.log('No Instance ID token available. Request permission to generate one.');
             }
@@ -49,5 +47,4 @@ export const askForPermissioToReceiveNotifications = async () => {
       console.error(error);
     }
   })
-  
-  }
+}
