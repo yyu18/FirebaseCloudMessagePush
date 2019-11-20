@@ -25,6 +25,7 @@ var options = {
 console.log(options);
 
 app.post('/sendTopic', function(req, res) {
+    console.log(req.body);
     if(!req.body.topic||!req.body.content){
         res.json({
             'status':'ERROR',
