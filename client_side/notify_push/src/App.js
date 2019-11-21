@@ -34,9 +34,7 @@ class App extends React.Component {
                 if(JSON.parse(result).permission){
                   self.setState({ permission:'NO' })
                 } else {
-
                 self.setState({ token:JSON.parse(result).token });
-                self.setState({ permission:'granted' });
                     
                 if(JSON.parse(result).token) {
                   //check the info of all topics
@@ -86,9 +84,7 @@ class App extends React.Component {
               if(JSON.parse(result).permission){
                 self.setState({ permission:'NO' })
               } else {
-
               self.setState({ token:JSON.parse(result).token });
-              self.setState({ permission:'granted' });
                   
               if(JSON.parse(result).token) {
                 //check the info of all topics

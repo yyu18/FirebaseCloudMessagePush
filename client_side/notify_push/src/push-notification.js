@@ -21,16 +21,6 @@ export const askForPermissioToReceiveNotifications = async () => {
     try {     
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
-          console.log('Notification permission granted.');
-        } else {
-          console.log('Unable to get permission to notify.');
-          return resolve(
-            JSON.stringify({
-            "permission":'disagree'
-            })
-          );
-        }
-      });
           messaging.getToken().then((currentToken) => {
             if (currentToken) {
               //console.log(currentToken);
@@ -42,7 +32,16 @@ export const askForPermissioToReceiveNotifications = async () => {
             }
           }).catch((err) => {
             console.log('An error occurred while retrieving token. ', err);
-          });      
+          });   
+        } else {
+          console.log('Unable to get permission to notify.');
+          return resolve(
+            JSON.stringify({
+            "permission":'disagree'
+            })
+          );
+        }
+      });   
     } catch (error) {
       console.error(error);
     }
