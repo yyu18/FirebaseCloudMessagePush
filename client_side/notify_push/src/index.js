@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import RouteApp from './routeApp.js';
 
-
+console.log('hello')
 ReactDOM.render(<RouteApp />, document.getElementById('root'));
 
 

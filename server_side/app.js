@@ -150,6 +150,11 @@ app.post('/check-topics', function(req, res) {
     }
 });
 
+app.get('/firebase_control',function(req,res) {
+    //res.send('hello');
+    res.sendFile('tools/firebase_control.js' , { root : __dirname});
+
+})
 
 app.listen(5000, function() {
     console.log('Example app listening on port 5000!');

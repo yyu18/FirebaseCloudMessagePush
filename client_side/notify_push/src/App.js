@@ -74,12 +74,12 @@ class App extends React.Component {
                   })
                   }
                 }
-                });
-              } else {
+              });
+            } else {
                console.log('redirection');
-              }
-            });
-          } else {
+            }
+          });
+        } else {
             askForPermissioToReceiveNotifications().then(function(result){
               if(JSON.parse(result).permission){
                 self.setState({ permission:'NO' })
@@ -126,12 +126,7 @@ class App extends React.Component {
               }
               });
           }
-          }
-
-  componentDidUpdate () {
-    if(this.state.token) {
-    }
-  }
+        }
 
     handleClick = (id) =>{
       var xmlHttp = new XMLHttpRequest();
