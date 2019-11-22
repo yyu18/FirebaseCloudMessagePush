@@ -9,10 +9,6 @@ var router = express.Router();
     client.connect(err => {
         assert.equal(null,err);
         const collection = client.db("test").collection("users");
-        router.get('/test',function(req,res){
-            res.send('hello')
-        })
-        
         router.post('/insert',function(req,res){
             collection.insertOne({name:'yihu yu',email:'hunt.yuyh@gmail.com',description:'this is a insert one test'})
                 .then(result => res.send(result))
