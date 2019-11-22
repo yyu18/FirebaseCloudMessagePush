@@ -4,6 +4,8 @@ var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var mongo = require('./router/mongodb_connect.js');
+
 require('./tools/send_fcm_message.js')();
 require('./tools/get_access_token.js')();
 require('./tools/subscribe_topic.js')();
@@ -18,11 +20,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var options = {
-    key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
-    cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
-    ca: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/gd_bundle-g2-g1.crt'), 
+    //key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
+    //cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
+    //ca: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/gd_bundle-g2-g1.crt'), 
 }
 console.log(options);
+
+app.use('/mongo',mongo);
 
 app.post('/sendTopic', function(req, res) {
     console.log(req.body);
@@ -160,6 +164,6 @@ app.listen(5000, function() {
     console.log('Example app listening on port 5000!');
 });
 
-https.createServer(options, app).listen(8080,function(){
+/*https.createServer(options, app).listen(8080,function(){
     console.log('listening on 8080')
-});
+});*/
