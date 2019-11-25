@@ -1,5 +1,3 @@
-
-
 module.exports = function() {
     this.validURL = function (str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol

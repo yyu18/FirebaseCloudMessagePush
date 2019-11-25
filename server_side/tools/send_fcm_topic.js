@@ -1,6 +1,7 @@
 var request = require('request');
-
 var PROJECT_ID = 'pushnotification-124c9';
+require('./valid_image.js')();
+
 //https://homepages.cae.wisc.edu/~ece533/images/airplane.png
 module.exports = function() {
     this.sendFcmTopic = function (topic,content,callback) {    
@@ -10,8 +11,11 @@ module.exports = function() {
                     if(!content.image.match(/.(jpg|jpeg|png|gif)$/i)||!content.icon.match(/.(jpg|jpeg|png|gif)$/i)){
                         return callback('IMAGE Extension is not allowed');
                     } else {
-      
-
+                        console.log(validImage(content.image));
+                        console.log(validImage(content.icon));
+                        if(!validImage(content.image)||!validImage(content.icon)){
+                            return callback('Sorry, the Image or ICON URL must be HTTPS!');
+                        } else {
             const data = JSON.stringify(
                 {
                     "notification":{
@@ -75,8 +79,9 @@ module.exports = function() {
         })
 
     */
-                    }
                 }
             }
         }
+    }
+}
     

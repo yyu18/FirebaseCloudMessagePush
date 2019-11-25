@@ -108,7 +108,14 @@ import {
               ],
             })(<Input.Password />)}
           </Form.Item>
-          <Form.Item label="Image">
+          <Form.Item label={
+              <span>
+                Image&nbsp;
+                <Tooltip title="The Image URL must be https">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            }>
             {getFieldDecorator('image', {
               rules: [
                 {
@@ -123,7 +130,7 @@ import {
             label={
               <span>
                 ICON&nbsp;
-                <Tooltip title="The small image logo beside the notification.">
+                <Tooltip title="The Image URL must be https, ICON is a small image logo beside the notification.">
                   <Icon type="question-circle-o" />
                 </Tooltip>
               </span>

@@ -10,7 +10,7 @@ var router = express.Router();
         assert.equal(null,err);
         const collection = client.db("test").collection("users");
         router.post('/insert',function(req,res){
-            collection.insertOne({name:'yihu yu',email:'hunt.yuyh@gmail.com',description:'this is a insert one test'})
+            collection.insertOne({'name':'yihu yu','email':'hunt.yuyh@gmail.com','description':'this is a insert one test'})
                 .then(result => res.send(result))
                 .catch(err=>console.error('insert field'));
         })
@@ -23,6 +23,8 @@ var router = express.Router();
 
         router.post('/findByQuery',function(req,res){
             collection.find({'email':'hunt.yuyh@gmail'}).toArray(function(err, docs) {
+                assert.equal(err,null);
+                console.log(docs);
                 res.send(docs);
             });
         })
@@ -34,6 +36,7 @@ var router = express.Router();
                 console.log(result);
             })
         })
+        
         router.post('/delete',function(req,res){
             collection.deleteMany({'email':'hunt.yuyh@gmail.com'},function(err,obj){
                 assert.equal(err,null);
