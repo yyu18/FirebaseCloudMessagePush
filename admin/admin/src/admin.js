@@ -74,7 +74,8 @@ import {
       return (
          
         <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{width:"40%",margin:'auto'}}>
-          <h1 style={{textAlign:'center'}}>Send Notification By Topic/Group</h1>
+          <h1 style={{textAlign:'center', marginLeft:'20%'}}>Send Notification By Topic/Group</h1>
+          <div class="formPosition">
           <Form.Item label="Topic">
             {getFieldDecorator('topic', {
               rules: [
@@ -102,11 +103,8 @@ import {
                   required: true,
                   message: 'Please input the notification body!',
                 },
-                {
-                  validator: this.validateToNextPassword,
-                },
               ],
-            })(<Input.Password />)}
+            })(<Input />)}
           </Form.Item>
           <Form.Item label={
               <span>
@@ -156,11 +154,13 @@ import {
             })(<Input />)}
           </Form.Item>
 
+
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{width:'20.8%'}}>
               Submit
             </Button>
           </Form.Item>
+          </div>
         </Form>
       );
     }

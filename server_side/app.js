@@ -28,6 +28,38 @@ console.log(options);
 
 app.use('/mongo',mongo);
 
+app.post('/subscribe', function(req, res) {
+    console.log(req.body);
+    if(req.body.token){
+        if(req.body.topic){
+            subscribeTopic(req.body.token,req.body.topic,function(err,data){
+                if(err) {
+                    res.json({
+                        'status':'ERROR',
+                        'message':err
+                    })
+                } else {
+                    res.json({
+                        'status':'SUCCESS',
+                        'message':'Subscribed Successfully!'
+                    })
+                }
+            });
+        } else {
+            res.json({
+                'status':'ERROR',
+                'message':'Empty Topic'
+            })
+        }
+    } else {
+        res.json({
+            'status':'ERROR',
+            'message':'Invalid Token'
+        })
+    }
+});
+
+
 app.post('/sendTopic', function(req, res) {
     console.log(req.body);
     if(!req.body.topic||!req.body.content){
@@ -60,36 +92,7 @@ app.post('/sendTopic', function(req, res) {
 }
 });
 
-app.post('/subscribe', function(req, res) {
-    console.log(req.body);
-    if(req.body.token){
-        if(req.body.topic){
-            subscribeTopic(req.body.token,req.body.topic,function(err,data){
-                if(err) {
-                    res.json({
-                        'status':'ERROR',
-                        'message':err
-                    })
-                } else {
-                    res.json({
-                        'status':'SUCCESS',
-                        'message':'Subscribed Successfully!'
-                    })
-                }
-            });
-        } else {
-            res.json({
-                'status':'ERROR',
-                'message':'Empty Topic'
-            })
-        }
-    } else {
-        res.json({
-            'status':'ERROR',
-            'message':'Invalid Token'
-        })
-    }
-});
+
 
 app.post('/unsubscribe', function(req, res) {
     //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';

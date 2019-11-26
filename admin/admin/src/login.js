@@ -2,7 +2,6 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import React from 'react';
 import './App.css';
 import Admin from './admin.js';
-import { relativeTimeRounding } from 'moment';
 
 class NormalLoginForm extends React.Component {
     state = {
@@ -15,17 +14,21 @@ class NormalLoginForm extends React.Component {
         console.log('Received values of form: ', values);
         if(values.username ==='admin'||values.password==='123'){
             this.setState({confirmDirty:true});
+            localStorage.setItem('confirmDirty','true');
         }
       }
     });
   };
-
+  signOut = () =>{
+    localStorage.removeItem('confirmDirty');
+    window.location.reload();
+  }
   render() {
-    console.log(this.state);
+    console.log(localStorage.getItem('confirmDirty')==='true');
     const { getFieldDecorator } = this.props.form;
     return (
 <div>
-{this.state.confirmDirty===false ? (
+{localStorage.getItem('confirmDirty')!=='true' ? (
 <Form onSubmit={this.handleSubmit} className="login-form" style={{width:'19%',margin:'auto'}}>
         <Form.Item>
           {getFieldDecorator('username', {
@@ -53,7 +56,7 @@ class NormalLoginForm extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="" style={{justifyContent:'center',display:'flex'}}>
+          <a className="login-form-forgot" style={{justifyContent:'center',display:'flex'}}>
             Forgot password
           </a>
           <Button type="primary" htmlType="submit" className="login-form-button" style={{width:'60%'}}>
@@ -64,6 +67,9 @@ class NormalLoginForm extends React.Component {
       ) : (
         <div>
             <Admin />
+            <Button  className="login-form-button" style = {{position:'relative',left:'55px',top:'-60px'}} onClick={()=>this.signOut()}>
+                Sign Out
+            </Button>
         </div>
       )}
       </div>

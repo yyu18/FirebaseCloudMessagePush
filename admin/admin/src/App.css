@@ -72,3 +72,11 @@ code {
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
 }
+
+.formPosition {
+  display:flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: left !important;
+
+}
