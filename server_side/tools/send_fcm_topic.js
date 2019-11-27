@@ -42,8 +42,7 @@ module.exports = function() {
             if(bodyParse.error) return callback(bodyParse.error);
             callback(null,bodyParse);
         })
-
-    /*
+ /*
     //call HTTP V1 API
         const data = JSON.stringify(
             {
@@ -79,6 +78,7 @@ module.exports = function() {
         })
 
     */
+   
                 }
             }
         }

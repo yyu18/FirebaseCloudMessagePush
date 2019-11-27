@@ -59,7 +59,6 @@ app.post('/subscribe', function(req, res) {
     }
 });
 
-
 app.post('/sendTopic', function(req, res) {
     console.log(req.body);
     if(!req.body.topic||!req.body.content){
@@ -92,8 +91,6 @@ app.post('/sendTopic', function(req, res) {
 }
 });
 
-
-
 app.post('/unsubscribe', function(req, res) {
     //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
     //var topic = 'notifyTest';
@@ -122,12 +119,8 @@ app.post('/unsubscribe', function(req, res) {
 });
 
 app.get('/send1to1message', function(req, res) {
-    var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
-    var topic = 'notifyTest';
     getAccessToken().then(function (accessToken){
-        //sendFcmMessage(accessToken.access_token);
-        //subscribeTopic(token,topic);
-        sendFcmMessage(token);
+        sendFcmMessage(accessToken.access_token);
         res.send('sent');
     });  
 });
