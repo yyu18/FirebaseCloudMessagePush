@@ -3,6 +3,8 @@ var admin = require('firebase-admin');
 var PROJECT_ID = 'pushnotification-124c9';
 var HOST = 'fcm.googleapis.com';
 var PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
+//npm start index.js & 
+//ps ax|grep node 
 //$env:GOOGLE_APPLICATION_CREDENTIALS='pushnotification-124c9-firebase-adminsdk-yjb00-75cd76c370.json'
 module.exports = function() {
     this.sendFcmMessage = function (token,callback) {
