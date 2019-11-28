@@ -6,12 +6,11 @@ var PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
 //npm start index.js & 
 //ps ax|grep node 
 //$env:GOOGLE_APPLICATION_CREDENTIALS='pushnotification-124c9-firebase-adminsdk-yjb00-75cd76c370.json'
+//export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file.json"
 module.exports = function() {
     this.sendFcmMessage = function (token,callback) {
 //HTTP V1 SDK
-        admin.initializeApp({
-            credential: admin.credential.applicationDefault(),
-          });
+
 
                 var registrationToken = 'fg1Low5vUOVNJHrKNCOgwP:APA91bHRcFvFl11ysmyexfnnZeAtKW6hqWQtq7eZeugaH7FjgmyvoaEhvdlhjcvHKWKT_nNyeDlzTfV7OenTXu2mENmaUsJ0cE6CNyHy5soWABMm5GUgpsR-nWKrSpAhFXLEr9zczy6B';
 

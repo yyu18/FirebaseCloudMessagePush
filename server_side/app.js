@@ -4,6 +4,7 @@ var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var admin = require('firebase-admin');
 var mongo = require('./router/mongodb_connect.js');
 
 require('./tools/send_fcm_message.js')();
@@ -19,13 +20,15 @@ require('./tools/valid_url.js')();
 app.use(bodyParser.json());
 app.use(cors());
 
-/*var options = {
+var options = {
     key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
     cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
     ca: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/gd_bundle-g2-g1.crt'), 
 }
-console.log(options);*/
-
+console.log(options);
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+  });
 app.use('/mongo',mongo);
 
 app.post('/subscribe', function(req, res) {
@@ -160,6 +163,6 @@ app.listen(6000, function() {
     console.log('Example app listening on port 6000!');
 });
 
-/*https.createServer(options, app).listen(8080,function(){
+https.createServer(options, app).listen(8080,function(){
     console.log('listening on 8080')
-});*/
+});
