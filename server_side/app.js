@@ -18,7 +18,7 @@ require('./tools/valid_url.js')();
 
 app.use(bodyParser.json());
 app.use(cors());
-    
+ /*   
         var options = {
             key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
             cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
@@ -27,9 +27,9 @@ app.use(cors());
         https.createServer(options, app).listen(3001,function(){
             console.log('listening on 3001')
         });
+*/
 
-
-//app.listen(5000, function() { console.log('Example app listening on port 5000!'); });
+app.listen(5000, function() { console.log('Example app listening on port 5000!'); });
 
 
 app.use('/mongo',mongo);
