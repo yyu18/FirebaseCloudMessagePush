@@ -4,7 +4,6 @@ var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var admin = require('firebase-admin');
 var mongo = require('./router/mongodb_connect.js');
 
 require('./tools/send_fcm_message.js')();
@@ -19,16 +18,20 @@ require('./tools/valid_url.js')();
 
 app.use(bodyParser.json());
 app.use(cors());
+    
+        var options = {
+            key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
+            cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
+            ca: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/gd_bundle-g2-g1.crt'), 
+        }
+        https.createServer(options, app).listen(3001,function(){
+            console.log('listening on 3001')
+        });
 
-var options = {
-    key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
-    cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
-    ca: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/gd_bundle-g2-g1.crt'), 
-}
-console.log(options);
-admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-  });
+
+//app.listen(5000, function() { console.log('Example app listening on port 5000!'); });
+
+
 app.use('/mongo',mongo);
 
 app.post('/subscribe', function(req, res) {
@@ -62,6 +65,7 @@ app.post('/subscribe', function(req, res) {
     }
 });
 
+
 app.post('/sendTopic', function(req, res) {
     console.log(req.body);
     if(!req.body.topic||!req.body.content){
@@ -94,6 +98,8 @@ app.post('/sendTopic', function(req, res) {
 }
 });
 
+
+
 app.post('/unsubscribe', function(req, res) {
     //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
     //var topic = 'notifyTest';
@@ -121,11 +127,9 @@ app.post('/unsubscribe', function(req, res) {
     });  
 });
 
-app.get('/send1to1message', function(req, res) {
-    getAccessToken().then(function (accessToken){
-        sendFcmMessage(accessToken.access_token);
-        res.send('sent');
-    });  
+app.post('/send1to1message', function(req, res) {
+    console.log(req.body);
+    sendFcmMessage(req.body.token);
 });
 
 app.post('/check-topics', function(req, res) {
@@ -159,10 +163,3 @@ app.get('/firebase_control',function(req,res) {
 
 })
 
-app.listen(6000, function() {
-    console.log('Example app listening on port 6000!');
-});
-
-https.createServer(options, app).listen(8080,function(){
-    console.log('listening on 8080')
-});
