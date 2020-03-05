@@ -4,7 +4,7 @@ var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var mongo = require('./router/mongodb_connect.js');
+//var mongo = require('./router/mongodb_connect.js');
 
 require('./tools/send_fcm_message.js')();
 require('./tools/get_access_token.js')();
@@ -18,7 +18,7 @@ require('./tools/valid_url.js')();
 
 app.use(bodyParser.json());
 app.use(cors());
- /*   
+ 
         var options = {
             key: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/singtao.ca.key'),
             cert: fs.readFileSync('/etc/ssl/wildcard.singtao.ca/a4ee7431ef966eb1.crt'),
@@ -27,12 +27,12 @@ app.use(cors());
         https.createServer(options, app).listen(3001,function(){
             console.log('listening on 3001')
         });
-*/
-
-app.listen(5000, function() { console.log('Example app listening on port 5000!'); });
 
 
-app.use('/mongo',mongo);
+//app.listen(5000, function() { console.log('Example app listening on port 5000!'); });
+
+
+//app.use('/mongo',mongo);
 
 app.post('/subscribe', function(req, res) {
     console.log(req.body);
@@ -45,6 +45,8 @@ app.post('/subscribe', function(req, res) {
                         'message':err
                     })
                 } else {
+                    console.log('subscribed successfully!');
+                    console.log(req.body.topic);
                     res.json({
                         'status':'SUCCESS',
                         'message':'Subscribed Successfully!'
@@ -87,6 +89,7 @@ app.post('/sendTopic', function(req, res) {
                         'status':'SUCCESS',
                         'message':'Message Sent, Message ID Is'+data.message_id
                     })
+                    
                 }
             })
         } else {

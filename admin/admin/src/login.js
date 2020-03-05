@@ -12,7 +12,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        if(values.username ==='admin'||values.password==='123'){
+        if(values.username ==='admin'&&values.password==='ccue12345'){
             this.setState({confirmDirty:true});
             localStorage.setItem('confirmDirty','true');
         }
@@ -24,11 +24,10 @@ class NormalLoginForm extends React.Component {
     window.location.reload();
   }
   render() {
-    console.log(localStorage.getItem('confirmDirty')==='true');
     const { getFieldDecorator } = this.props.form;
     return (
 <div>
-{localStorage.getItem('confirmDirty')!=='true' ? (
+{this.state.confirmDirty!==true ? (
 <Form onSubmit={this.handleSubmit} className="login-form" style={{width:'19%',margin:'auto'}}>
         <Form.Item>
           {getFieldDecorator('username', {

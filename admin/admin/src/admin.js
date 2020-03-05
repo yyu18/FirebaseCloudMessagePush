@@ -19,7 +19,7 @@ import {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           var xmlHttp = new XMLHttpRequest();
-          xmlHttp.open( "POST",  'https://nodejs.singtao.ca:8080/sendTopic'); // false for synchronous request
+          xmlHttp.open( "POST",  'https://nodejs.singtao.ca:3001/sendTopic'); // false for synchronous request
           xmlHttp.setRequestHeader("Content-Type", "application/json");
           xmlHttp.send(JSON.stringify({
             "topic":values.topic,
