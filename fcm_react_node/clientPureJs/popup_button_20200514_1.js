@@ -69,11 +69,11 @@ function firebaseControl() {
   }
   function subscribeTopic(token) {
       var data = JSON.stringify({
-          "topic":'blackfriday',
+          "topic":'test_steve_hubert',
           "token":token
       });
       var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "POST",  'https://nodejs.singtao.ca:3001/subscribe'); // false for synchronous request
+      xmlHttp.open( "POST",  'https://mastersandbox2.singtao.ca:5000/subscribe'); // false for synchronous request
       xmlHttp.setRequestHeader("Content-Type", "application/json");
       xmlHttp.send(data);
       xmlHttp.onreadystatechange= function() {
@@ -89,7 +89,7 @@ function firebaseControl() {
   }
 
 (function() {
-
+console.log('firebase contect');
   //the old account configuration:
   /*  var firebaseConfig = {
         apiKey: "AIzaSyBZ9iO9ZwY3Eck9_Ja_NTfaoEVo_sWzZoc",
