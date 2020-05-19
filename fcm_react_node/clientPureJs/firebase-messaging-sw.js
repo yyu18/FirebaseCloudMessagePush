@@ -13,17 +13,18 @@ var firebaseConfig = {
   measurementId: "G-C1WGZPEPBX"
   };
 */
+  // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyD5RnLj_yhouX5YqPIW7ul6y-ffv32uhrw",
-    authDomain: "singclub-web-push-notification.firebaseapp.com",
-    databaseURL: "https://singclub-web-push-notification.firebaseio.com",
-    projectId: "singclub-web-push-notification",
-    storageBucket: "singclub-web-push-notification.appspot.com",
-    messagingSenderId: "1042744562869",
-    appId: "1:1042744562869:web:b38f2915e3d92799435afc",
-    measurementId: "G-YM1NZMETKV"
+    apiKey: "AIzaSyAZcIseC2UyttJhmriir2rymtOUTJi-SCc",
+    authDomain: "singtao-news.firebaseapp.com",
+    databaseURL: "https://singtao-news.firebaseio.com",
+    projectId: "singtao-news",
+    storageBucket: "singtao-news.appspot.com",
+    messagingSenderId: "557405338918",
+    appId: "1:557405338918:web:24335359cf1939d40255e7",
+    measurementId: "G-4VGZKKHC6Z"
   };
-
+  // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();

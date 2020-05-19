@@ -1,14 +1,14 @@
 import firebase from 'firebase';
 
-var firebaseConfig = {
-  apiKey: "AIzaSyBZ9iO9ZwY3Eck9_Ja_NTfaoEVo_sWzZoc",
-  authDomain: "pushnotification-124c9.firebaseapp.com",
-  databaseURL: "https://pushnotification-124c9.firebaseio.com",
-  projectId: "pushnotification-124c9",
-  storageBucket: "pushnotification-124c9.appspot.com",
-  messagingSenderId: "661909794742",
-  appId: "1:661909794742:web:a00aab3b2b8800a82b5b17",
-  measurementId: "G-C1WGZPEPBX"
+const firebaseConfig = {
+  apiKey: "AIzaSyAZcIseC2UyttJhmriir2rymtOUTJi-SCc",
+  authDomain: "singtao-news.firebaseapp.com",
+  databaseURL: "https://singtao-news.firebaseio.com",
+  projectId: "singtao-news",
+  storageBucket: "singtao-news.appspot.com",
+  messagingSenderId: "557405338918",
+  appId: "1:557405338918:web:e2d76f3e2eae76f60255e7",
+  measurementId: "G-8LSC4P988N"
 };
 firebase.initializeApp(firebaseConfig);
 

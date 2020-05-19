@@ -8,6 +8,7 @@ function firebaseControl() {
       if (permission === 'granted') {
           messaging.getToken().then((currentToken) => {
           if (currentToken) { 
+            console.log("token:"+currentToken);
             subscribeTopic(currentToken);
             var notificationOptions = {
               title:'星CLUB',
@@ -69,9 +70,10 @@ function firebaseControl() {
   }
   function subscribeTopic(token) {
       var data = JSON.stringify({
-          "topic":'test_steve_hubert',
+          "topic":"test_steve_hubert",
           "token":token
       });
+      console.log(data);
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "POST",  'https://mastersandbox2.singtao.ca:5000/subscribe'); // false for synchronous request
       xmlHttp.setRequestHeader("Content-Type", "application/json");
@@ -89,7 +91,7 @@ function firebaseControl() {
   }
 
 (function() {
-console.log('firebase contect');
+console.log('firebase contact');
   //the old account configuration:
   /*  var firebaseConfig = {
         apiKey: "AIzaSyBZ9iO9ZwY3Eck9_Ja_NTfaoEVo_sWzZoc",
@@ -102,17 +104,19 @@ console.log('firebase contect');
         measurementId: "G-C1WGZPEPBX"
         };
         */
-var firebaseConfig = {
-  apiKey: "AIzaSyD5RnLj_yhouX5YqPIW7ul6y-ffv32uhrw",
-  authDomain: "singclub-web-push-notification.firebaseapp.com",
-  databaseURL: "https://singclub-web-push-notification.firebaseio.com",
-  projectId: "singclub-web-push-notification",
-  storageBucket: "singclub-web-push-notification.appspot.com",
-  messagingSenderId: "1042744562869",
-  appId: "1:1042744562869:web:b38f2915e3d92799435afc",
-  measurementId: "G-YM1NZMETKV"
-};
-    firebase.initializeApp(firebaseConfig);
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAZcIseC2UyttJhmriir2rymtOUTJi-SCc",
+    authDomain: "singtao-news.firebaseapp.com",
+    databaseURL: "https://singtao-news.firebaseio.com",
+    projectId: "singtao-news",
+    storageBucket: "singtao-news.appspot.com",
+    messagingSenderId: "557405338918",
+    appId: "1:557405338918:web:24335359cf1939d40255e7",
+    measurementId: "G-4VGZKKHC6Z"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
     const popupButton = document.getElementById('popup-button');
 
