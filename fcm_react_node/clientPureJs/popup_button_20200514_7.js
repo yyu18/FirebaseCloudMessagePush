@@ -112,8 +112,8 @@ console.log('firebase contact');
     projectId: "singtao-news",
     storageBucket: "singtao-news.appspot.com",
     messagingSenderId: "557405338918",
-    appId: "1:557405338918:web:24335359cf1939d40255e7",
-    measurementId: "G-4VGZKKHC6Z"
+    appId: "1:557405338918:web:6a94ed20110de7f80255e7",
+    measurementId: "G-L8ZC156K0E"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);

@@ -525,7 +525,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script defer src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
 	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
-	<script defer src="./js/popup_button_20200514_6.js"></script>
+	<script defer src="./js/popup_button_20200514_7.js"></script>
 
 	<script>
 	$(document).ready(function() {
