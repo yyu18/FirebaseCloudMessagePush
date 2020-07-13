@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var router = express.Router();
 var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -15,6 +16,7 @@ require('./tools/unsubscribe_topic.js')();
 require('./tools/check_topics.js')();
 require('./tools/valid_url.js')();
 var adminSDKTest = require('./tools/sdktest.js');
+const { endianness } = require('os');
 //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
 //var topic = 'notifyTest';
 
@@ -44,15 +46,52 @@ app.listen(5000,function() { console.log('Example app listening on port 5000!');
 3. Subscribe and unsubscribe devices to and from topics
 */
 
-app.post('/adminSDK',function (req, res){
-    console.log(req.body);
-    if(req.body){
-        adminSDKTest.sendTopic();
-        adminSDKTest.subscribeTopic();
-        res.json({
-            hello:'hello'
-        })
+app.use('/adminSDK',adminSDKTest);
+
+//begin router level middleware
+
+//override the status code 
+app.response.sendStatus = function (statusCode, type, message) {
+    // code is intentionally kept simple for demonstration purpose
+    return this.contentType(type)
+      .status(statusCode)
+      .send(message)
+  }
+
+router.use((req,res,next)=>{
+    if(req.query.test=='1'){
+        console.log('this is a router middleware use test1');
+        next();
+    } else {
+        var err = 'error found';
+        next(err);
     }
+},(req,res,next)=>{
+    console.log('this is a router middleware use test2');
+    next();
+})
+
+const middlewareTest = function (req,res,next) {
+    console.log('test id correct, next');
+    res.sendStatus(200,'application/json','{"successful":"test id is correct"}');    
+}
+
+const errorHandler = function(err, req,res,next) {
+    //console.log('error found'+err);
+    res.sendStatus(404,'application/json','{"error":"error found"}');
+}
+
+router.use(middlewareTest);
+
+app.get('/',router);
+app.use(errorHandler);
+//end middleware test
+
+
+
+app.get('/user/:id', function (req, res, next) {
+    console.log(req.params.id);
+    next();
 })
 
 app.post('/subscribe', function(req, res) {

@@ -1,16 +1,19 @@
-var admin = require("firebase-admin");
+var express = require('express');
+var router = express.Router();
+var adminSDKTest = require('./sdk_test_function.js');
 
-//firebase initial
-admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-  });
+const adminSDKController = function (req, res){
+    console.log(req.body);
+    if(req.body){
+        adminSDKTest.sendTopic();
+        adminSDKTest.subscribeTopic();
+        res.json({
+            hello:'hello'
+        })
 
-module.exports = {
-    sendTopic:function(token,callback) {
-        console.log('sendTopic');
-    },
-    
-    subscribeTopic:function (topic,callback){
-        console.log('subscribeTopic');
     }
 }
+
+router.post('/send',adminSDKController);
+
+module.exports = router;
