@@ -12,8 +12,12 @@ const adminSDKController = function (req, res){
         })
 
     }
+    next();
 }
 
+const middleware = function(){
+    console.log('middleware have inside send');
+}
 router.post('/send',adminSDKController);
-
+router.use('/send',middleware);
 module.exports = router;
