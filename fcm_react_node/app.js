@@ -15,12 +15,13 @@ require('./tools/send_fcm_topic.js')();
 require('./tools/unsubscribe_topic.js')();
 require('./tools/check_topics.js')();
 require('./tools/valid_url.js')();
-var adminSDKTest = require('./tools/sdktest.js');
+var adminSDKController = require('./tools/sdktest.js');
 const { endianness } = require('os');
 //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
 //var topic = 'notifyTest';
 
 app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended:false}));//can receive x-www-form-urlencoded
 app.use(cors());
 //begin https with credential key
          /*var options = {
@@ -46,8 +47,28 @@ app.listen(5000,function() { console.log('Example app listening on port 5000!');
 3. Subscribe and unsubscribe devices to and from topics
 */
 
-app.use('/adminSDK',adminSDKTest);
+app.response.sendStatus = function (statusCode, type, message) {
+    return this.contentType(type)
+      .status(statusCode)
+      .send(message)
+}
 
+app.use('/adminSDK',(req,res,next)=>{
+    if(req.body.token){
+        next();
+    } else {
+        res.sendStatus(404,'application/json','{"error":"user is not logged"}');    
+    }
+})
+
+const errorHandler = function(err,req,res,next) {
+    //console.log('error found'+err);
+    res.sendStatus(404,'application/json',{"error":err});
+}
+
+app.use('/adminSDK',adminSDKController);
+app.use(errorHandler);
+/*
 //begin router level middleware
 
 //override the status code 
@@ -86,7 +107,7 @@ router.use(middlewareTest);
 app.get('/',router);
 app.use(errorHandler);
 //end middleware test
-
+*/
 
 
 app.get('/user/:id', function (req, res, next) {

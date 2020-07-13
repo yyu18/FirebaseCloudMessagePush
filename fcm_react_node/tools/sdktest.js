@@ -1,23 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var adminSDKTest = require('./sdk_test_function.js');
+var admin = require("firebase-admin");
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+  });
 
-const adminSDKController = function (req, res){
-    console.log(req.body);
-    if(req.body){
-        adminSDKTest.sendTopic();
-        adminSDKTest.subscribeTopic();
-        res.json({
-            hello:'hello'
-        })
-
+router.post('/send',(req,res,next)=>{
+    var message = {
+        data:req.body.data,
+        topic:req.body.topic
     }
-    next();
-}
+console.log(message);
+    admin.messaging().send(message)
+        .then((response) => {
+            // Response is a message ID string.
+            console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+            next(error);
+        });
+});
 
-const middleware = function(){
-    console.log('middleware have inside send');
-}
-router.post('/send',adminSDKController);
-router.use('/send',middleware);
 module.exports = router;
