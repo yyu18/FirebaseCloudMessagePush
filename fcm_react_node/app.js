@@ -47,7 +47,7 @@ app.listen(5000,function() { console.log('Example app listening on port 5000!');
 3. Subscribe and unsubscribe devices to and from topics
 */
 
-app.response.sendStatus = function (statusCode, type, message) {
+app.response.sendStatus = function (statusCode, type, message){
     return this.contentType(type)
       .status(statusCode)
       .send(message)
