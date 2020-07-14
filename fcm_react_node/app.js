@@ -15,7 +15,7 @@ require('./tools/send_fcm_topic.js')();
 require('./tools/unsubscribe_topic.js')();
 require('./tools/check_topics.js')();
 require('./tools/valid_url.js')();
-var adminSDKController = require('./tools/sdktest.js');
+var adminSDKRouter = require('./router/adminSDKRouter.js');
 const { endianness } = require('os');
 //var token = 'fg1Low5vUOVNJHrKNCOgwP:APA91bGVLWsGZnIOOoffeBcs1_UeVGvkfBwRwHGToi5M8PbA9SG7o23dwlu63xiG4SsRFs62jkG-ie2UY2AWD-nHIAjud1KvBNkD4UhpIY5uUsUB4izZw_jnck9kWDllofw2xYbVnTfH';
 //var topic = 'notifyTest';
@@ -46,8 +46,12 @@ app.listen(5000,function() { console.log('Example app listening on port 5000!');
 2. Send messages to topics and condition statements that match one or more topics.
 3. Subscribe and unsubscribe devices to and from topics
 */
+const errorHandler = function(err,req,res,next) {
+    //res.status(404).end();
+    res.sendStatus(404,'application/json',{"error":err});
+}
 
-app.response.sendStatus = function (statusCode, type, message){
+app.response.sendStatus = function (statusCode, type, message) {
     return this.contentType(type)
       .status(statusCode)
       .send(message)
@@ -61,12 +65,7 @@ app.use('/adminSDK',(req,res,next)=>{
     }
 })
 
-const errorHandler = function(err,req,res,next) {
-    //console.log('error found'+err);
-    res.sendStatus(404,'application/json',{"error":err});
-}
-
-app.use('/adminSDK',adminSDKController);
+app.use('/adminSDK',adminSDKRouter);
 app.use(errorHandler);
 /*
 //begin router level middleware
@@ -108,7 +107,6 @@ app.get('/',router);
 app.use(errorHandler);
 //end middleware test
 */
-
 
 app.get('/user/:id', function (req, res, next) {
     console.log(req.params.id);
