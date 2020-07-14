@@ -4,7 +4,7 @@ admin.initializeApp({
   }); 
 
 module.exports = {
-    sendMessage: function(req,res,callback) {
+    sendMessage: (req,res,callback)=>{
         var message = {
             "topic": "news",
             "notification": {
@@ -52,7 +52,7 @@ module.exports = {
           console.log('Error unsubscribing from topic:', error);
         });
     },
-    
+
     sendMulticast: (req,res,callback)=>{
         // These registration tokens come from the client FCM SDKs.
       const registrationTokens = [
