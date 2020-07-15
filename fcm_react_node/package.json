@@ -29,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node app.js"
+    "server": "node app.js",
+    "loginProxy":"node login.js"
   },
   "eslintConfig": {
     "extends": "react-app"

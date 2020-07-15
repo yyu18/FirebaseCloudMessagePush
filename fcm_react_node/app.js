@@ -1,11 +1,8 @@
 var express = require('express');
 var app = express();
-var router = express.Router();
 var https = require("https");
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var fs = require('fs');
-var admin = require("firebase-admin");
 //var mongo = require('./router/mongodb_connect.js');
 
 require('./tools/send_fcm_message.js')();
