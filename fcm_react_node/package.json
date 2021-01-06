@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^3.26.16",
     "assert": "^2.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "create-react-app": "^3.2.0",
